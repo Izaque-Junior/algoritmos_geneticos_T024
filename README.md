@@ -35,4 +35,4 @@ Durante o tempo de produção do trabalho contamos com a ajuda do professor e pe
 ## Referências Bibliográficas
 <br>[1] Cassar, Daniel Roberto. GA 4.2 - Notebook Descobrindo a senha.</br>
 
-<br>[2] de Lima, Felipe David Crasto. </br>
+<br>[2]Santos, C. e Lima, F. </br>
