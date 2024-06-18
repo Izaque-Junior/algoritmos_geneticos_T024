@@ -13,13 +13,13 @@ Este trabalho tem como objetivo desenvolver um algoritmo genético para otimizar
   
 - `scripts.py`: arquivo contendo as funções que são utilizadas no notebook jupyter.
 
+- `LICENSE`: arquivo que contém o tipo de licença deste repositório.
+
+- `README.md`: arquivo que armazena as informções deste readme.
+
 ## Bibliotecas necessárias para rodar o notebook:
 
 - **numpy**
-  
-- **networkx**
-  
-- **pyvis**
   
 - **random**
 
@@ -27,7 +27,7 @@ Este trabalho tem como objetivo desenvolver um algoritmo genético para otimizar
 (relatar aqui tudo sobre a teoria e a ideia para gerar o algoritmo genético.)
 
 ## Desenvolvimento
-Durante o tempo de produção do trabalho contamos com a ajuda do professor e pesquisador Dr. Felipe David Crasto de Lima [3], que nos auxiliou na compreensão do método do cálculo da energia total e eventuais dúvidas que surgiram durante o trabalho. Além disso, o código inicial, não otimizado, foi desenvolvido por Cauê Gomes Correia dos Santos [2].
+Durante o tempo de produção do trabalho contamos com a ajuda do professor e pesquisador Dr. Felipe David Crasto de Lima [2], que nos auxiliou na compreensão do método do cálculo da energia total e eventuais dúvidas que surgiram durante o trabalho. 
 
 ## Conclusão
 (destacar se alcançamos o objetivo principal do trabalho ou o que falta que tal)
@@ -35,6 +35,4 @@ Durante o tempo de produção do trabalho contamos com a ajuda do professor e pe
 ## Referências Bibliográficas
 <br>[1] Cassar, Daniel Roberto. GA 4.2 - Notebook Descobrindo a senha.</br>
 
-<br>[2] Santos, Cauê Gomes Correia dos.</br>
-
-<br>[3] de Lima, Felipe David Crasto. </br>
+<br>[2] de Lima, Felipe David Crasto. </br>
