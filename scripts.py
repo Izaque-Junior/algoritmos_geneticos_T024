@@ -209,8 +209,8 @@ def cruzamento(pai1, pai2, chanceCruzamento):
         for i in range(size):
             for j in range(size):
                 if j >= pontoCruzamento:
-                    child1[i, j] = upper_tri2[i, j]
-                    child2[i, j] = upper_tri1[i, j]
+                    child1[i, j] = upper_tri1[i, j]
+                    child2[i, j] = upper_tri2[i, j]
                 else:
                     child1[i, j] = upper_tri2[i, j]
                     child2[i, j] = upper_tri1[i, j]
