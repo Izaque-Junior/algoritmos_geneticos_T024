@@ -76,7 +76,7 @@ Ao final de tudo, o código rodou da forma que foi de nosso interesse, de forma 
 ## Referências Bibliográficas
 <br>[1] Cassar, Daniel Roberto. GA 4.2 - Notebook Descobrindo a senha.</br>
 
-<br>[2]Santos, C. e Lima, F. </br>
+<br>[2]Santos, C. e Lima, F. - Hamiltonian for n-site molecules </br>
 
 <br>[3] Cassar, Daniel Roberto. ATP-303 GA 2.3 - Notebook algoritmo genético</br> 
 
