@@ -37,4 +37,4 @@ Durante o tempo de produção do trabalho contamos com a ajuda do professor e pe
 
 <br>[2] Santos, Cauê Gomes Correia dos.</br>
 
-<br>[3] de Crasto, Felipe David Lima. </br>
+<br>[3] de Lima, Felipe David Crasto. </br>
