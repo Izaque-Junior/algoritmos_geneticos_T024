@@ -27,7 +27,7 @@ Este trabalho tem como objetivo desenvolver um algoritmo genético para otimizar
 (relatar aqui tudo sobre a teoria e a ideia para gerar o algoritmo genético.)
 
 ## Desenvolvimento
-(talvez seja necessário)
+Durante o tempo de produção do trabalho contamos com a ajuda do professor e pesquisador Dr. Felipe David Crasto de Lima [3], que nos auxiliou na compreensão do método do cálculo da energia total e eventuais dúvidas que surgiram durante o trabalho. Além disso, o código inicial, não otimizado, foi desenvolvido por Cauê Gomes Correia dos Santos [2].
 
 ## Conclusão
 (destacar se alcançamos o objetivo principal do trabalho ou o que falta que tal)
