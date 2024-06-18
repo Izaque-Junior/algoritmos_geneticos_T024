@@ -2,7 +2,7 @@ import numpy as np
 import random
 
 ############################################################################################################################################
-#                                                       Código Inicial                                                                    #
+#                                                       Código 'Hamiltonian for n-site molecules' [2]                                                                    #
 ############################################################################################################################################
 
 def energiaMin(qtdAtomos):
@@ -19,7 +19,7 @@ def energiaMin(qtdAtomos):
     # Gerar todas as possíveis matrizes
     for i in range(2 ** (qtdAtomos * (qtdAtomos - 1) // 2)):
         H = np.zeros((qtdAtomos, qtdAtomos))
-        bits = list(format(i, 'b').zfill(qtdAtomos * (qtdAtomos - 1) // 2))
+        bits = list(format(i, 'b').zfill(qtdAtomos * (qtdAtomos - 1) // 2)) #[5]
         bit_index = 0
         
         # Preencher a matriz com os valores adequados
@@ -78,7 +78,7 @@ def testaMatriz(matrizes):
     return melhor_matrix
 
 ############################################################################################################################################
-#                                                       From Molecules to Molecules                                                        #
+#                                                       Criando matriz triangular superior                                                #
 ############################################################################################################################################
 
 def criaTriu(size):
@@ -97,6 +97,10 @@ def criaTriu(size):
     Triu = np.triu(matrix)
     
     return Triu
+
+############################################################################################################################################
+#                                                       Iniciando população                                                                #
+############################################################################################################################################
 
 def iniciaPopu(pop_size, matrix_size):
     '''
@@ -117,6 +121,10 @@ def iniciaPopu(pop_size, matrix_size):
         populacao.append((upper_triangular, hamiltoniano))
         
     return populacao
+
+############################################################################################################################################
+#                                                       Calculando função objetivo                                                        #
+############################################################################################################################################
 
 def fitness(hamiltoniano):
     '''
@@ -166,7 +174,7 @@ def selecaoTorneio(populacao, valoresFit, k=3):
     selecionados = [populacao[i] for i in indexSelecionados]
     valoresFitSelecionados = [valoresFit[i] for i in indexSelecionados]
     
-    return selecionados[np.argmin(valoresFitSelecionados)]
+    return selecionados[np.argmin(valoresFitSelecionados)] #[4]
 
 ############################################################################################################################################
 #                                                       Cruzamento                                                                         #
@@ -220,6 +228,7 @@ def cruzamento(pai1, pai2, chanceCruzamento):
     
 ############################################################################################################################################
 #                                                       Mutação                                                                            #
+############################################################################################################################################
 
 def mutaTriu(individuos, chance_mutacao):
     '''
@@ -244,7 +253,3 @@ def mutaTriu(individuos, chance_mutacao):
 
             # Flipa o valor do elemento escolhido
             individuo[i, j] = 1 - individuo[i, j]
-
-############################################################################################################################################
-
-
