@@ -9,13 +9,19 @@ Este trabalho tem como objetivo desenvolver um algoritmo genético para otimizar
 
 ## Arquivos neste Github:
 
-(detalhar sobre os arquivos principais)
+- `arquivo_principal_notebook`: notebook contendo referências e explicações acerca do nosso raciocínio para desenvolver o nosso trabalho.
+  
+- `scripts.py`: arquivo contendo as funções que são utilizadas no notebook jupyter.
 
 ## Bibliotecas necessárias para rodar o notebook:
 
-<u>numpy</u>
-<u>networkx</u>
-<u>pyvis</u>
+- **numpy**
+  
+- **networkx**
+  
+- **pyvis**
+  
+- **random**
 
 ## Introdução
 (relatar aqui tudo sobre a teoria e a ideia para gerar o algoritmo genético.)
@@ -27,4 +33,8 @@ Este trabalho tem como objetivo desenvolver um algoritmo genético para otimizar
 (destacar se alcançamos o objetivo principal do trabalho ou o que falta que tal)
 
 ## Referências Bibliográficas
-(colocar aqui as referências em ABNT)
+<br>[1] Cassar, Daniel Roberto. GA 4.2 - Notebook Descobrindo a senha.</br>
+
+<br>[2] Santos, Cauê Gomes Correia dos.</br>
+
+<br>[3] de Crasto, Felipe David Lima. </br>
