@@ -48,7 +48,7 @@ Calcular os autovalores desse hamiltoniano é calcular os níveis energéticos d
 A questão com o trabalho desenvolvido é que ele calcula o nível de energia de todas as conformações possíveis de uma cadeia de N átomos e, então, retorna a menor. Para, por exemplo, uma cadeia de N=2, apenas 2 conformações são possíveis. Mas ao aumentar de 1 em 1, nota-se um padrão exponencial na quantidade total de conformações da cadeia. Para 5 átomos, são 1024 conformações. Para 7, 2 milhões.
 A equação que calcula a quantidade de conformações totais é a seguinte
 
-$\text{Conformacoes_Totais} = 2^{\frac{N(N-1)}{2}}$
+$\text{C_{Totais}} = 2^{\frac{N(N-1)}{2}}$
 
 Por conta disso, o código é visivelmente não otimizado. Dado esse problema, pensamos em criar um algoritmo genético de minimização que retorna a melhor energia de uma matriz de ordem N.
 
