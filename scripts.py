@@ -1,6 +1,4 @@
 import numpy as np 
-import networkx as nx
-from pyvis import network as net
 
 ############################################################################################################################################
 #                                                       Código Inicial                                                                    #
@@ -179,9 +177,79 @@ def tournament_selection(population, fitnesses, k=3):
 #                                                       Cruzamento                                                                         #
 ############################################################################################################################################
 
+def crossover(parent1, parent2, chance_cruzamento):
+    '''
+    Realiza o cruzamento entre dois pais para gerar um filho.
 
+    Args:
+        parent1: Tupla contendo a matriz triangular superior e a matriz simétrica correspondente do primeiro pai.
+        parent2: Tupla contendo a matriz triangular superior e a matriz simétrica correspondente do segundo pai.
+    
+    return: 
+        retorna uma tupla contendo a matriz triangular superior e a matriz simétrica correspondente do filho gerado.
+    '''
+    
+    upper_tri1, _ = parent1
+    upper_tri2, _ = parent2
+    if random.random() < chance_cruzamento:
+        child1 = []
+        child2 = []
+        size = upper_tri1.shape[0]
+        
+        crossover_point = np.random.randint(1, size)
+        
+        child1 = np.zeros((size, size)) #criando matriz de zeros para o filho 1
+        child2 = np.zeros((size, size)) #criando matriz de zeros para o filho 2
+        
+
+        # Copy upper part from parent1 and lower part from parent2
+        for i in range(size):
+            for j in range(size):
+                if j >= crossover_point:
+                    child1[i, j] = upper_tri1[i, j]
+                    child2[i, j] = upper_tri2[i, j]
+                else:
+                    child1[i, j] = upper_tri2[i, j]
+                    child2[i, j] = upper_tri2[i, j]
+
+        child1_combined = child1 + child1.T
+        child2_combined = child2 + child2.T
+        
+        filho1 = (child1, child1_combined)
+        filho2 = (child2, child2_combined)
+        
+        return filho1, filho2
+    
+    else:
+        return parent1, parent2
+    
 ############################################################################################################################################
 #                                                       Mutação                                                                            #
+
+def mutate_upper_triangular_binary(individuos, chance_mutacao):
+    '''
+    Muta uma matrix triangular superior, trocando um elemento 
+    aleatório (fora da diagonal) de 0 para 1, ou vice-versa.
+
+    Args: 
+        individuos: lista contendo as matrizes triangulares superiores
+        chance_mutacao: float que define o limiar da chance de ocorrer mutação no indivíduo
+        
+    return: 
+        retorna uma matriz triangular superior com uma mutação
+    '''
+    size = 0
+    for individuo in individuos:
+        size = individuo.shape[0]
+        if random.random() < chance_mutacao:
+
+            # Escolhe um elemento aleatório (tirando a diagonal)
+            i = np.random.randint(0, size - 1)
+            j = np.random.randint(i + 1, size)  # Assegura que estará acima da diagonal principal
+
+            # Flipa o valor do elemento escolhido
+            individuo[i, j] = 1 - individuo[i, j]
+
 ############################################################################################################################################
 
 

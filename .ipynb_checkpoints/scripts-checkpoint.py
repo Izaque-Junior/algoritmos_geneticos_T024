@@ -1,50 +1,8 @@
 import numpy as np 
-import networkx as nx
-from pyvis import network as net
 
 ############################################################################################################################################
-#                                                       Código Inicial                                                                     #
+#                                                       Código Inicial                                                                    #
 ############################################################################################################################################
-
-def draw_graph(networkx_graph,notebook=True,output_filename='graph.html',show_buttons=True,only_physics_buttons=True):
-    """
-    This function accepts a networkx graph object,
-    converts it to a pyvis network object preserving its node and edge attributes,
-    and both returns and saves a dynamic network visualization.
-    
-    Args:
-        networkx_graph: The graph to convert and display
-        notebook: Display in Jupyter? #(isso aqui continua??)
-        output_filename: Where to save the converted network
-        show_buttons: Show buttons in saved version of network? #(isso aqui continua??)
-        only_physics_buttons: Show only buttons controlling physics of network?
-    """
-    
-    # make a pyvis network
-    pyvis_graph = net.Network(notebook=notebook)
-    
-    # for each node and its attributes in the networkx graph
-    for node,node_attrs in networkx_graph.nodes(data=True):
-        pyvis_graph.add_node(str(node),**node_attrs)
-        
-    # for each edge and its attributes in the networkx graph
-    for source,target,edge_attrs in networkx_graph.edges(data=True):
-        # if value/width not specified directly, and weight is specified, set 'value' to 'weight'
-        if not 'value' in edge_attrs and not 'width' in edge_attrs and 'weight' in edge_attrs:
-            # place at key 'value' the weight of the edge
-            edge_attrs['value']=edge_attrs['weight']
-        # add the edge
-        pyvis_graph.add_edge(str(source),str(target),**edge_attrs)
-        
-    # turn buttons on
-    if show_buttons:
-        if only_physics_buttons:
-            pyvis_graph.show_buttons(filter_=['physics'])
-        else:
-            pyvis_graph.show_buttons()
-    
-    # return and also save
-    return pyvis_graph.show(output_filename)
 
 def minimiza_energia(quantidade_atomos):
     """
@@ -180,7 +138,7 @@ def fitness(combined_matrix):
     elif e % 2 == 1:
         ocupados = (e // 2) + 1
         
-    #CÁLCULO ENERGIA TOTAL SEGUNDO O MÉTODO DE HUCKEL
+    #CÁLCULO DA ENERGIA TOTAL SEGUNDO O MÉTODO DE HUCKEL
     t_total = 0
     
     for n in range(e//2):
@@ -219,9 +177,79 @@ def tournament_selection(population, fitnesses, k=3):
 #                                                       Cruzamento                                                                         #
 ############################################################################################################################################
 
+def crossover(parent1, parent2, chance_cruzamento):
+    '''
+    Realiza o cruzamento entre dois pais para gerar um filho.
 
+    Args:
+        parent1: Tupla contendo a matriz triangular superior e a matriz simétrica correspondente do primeiro pai.
+        parent2: Tupla contendo a matriz triangular superior e a matriz simétrica correspondente do segundo pai.
+    
+    return: 
+        retorna uma tupla contendo a matriz triangular superior e a matriz simétrica correspondente do filho gerado.
+    '''
+    
+    upper_tri1, _ = parent1
+    upper_tri2, _ = parent2
+    if random.random() < chance_cruzamento:
+        child1 = []
+        child2 = []
+        size = upper_tri1.shape[0]
+        
+        crossover_point = np.random.randint(1, size)
+        
+        child1 = np.zeros((size, size)) #criando matriz de zeros para o filho 1
+        child2 = np.zeros((size, size)) #criando matriz de zeros para o filho 2
+        
+
+        # Copy upper part from parent1 and lower part from parent2
+        for i in range(size):
+            for j in range(size):
+                if j >= crossover_point:
+                    child1[i, j] = upper_tri1[i, j]
+                    child2[i, j] = upper_tri2[i, j]
+                else:
+                    child1[i, j] = upper_tri2[i, j]
+                    child2[i, j] = upper_tri2[i, j]
+
+        child1_combined = child1 + child1.T
+        child2_combined = child2 + child2.T
+        
+        filho1 = (child1, child1_combined)
+        filho2 = (child2, child2_combined)
+        
+        return filho1, filho2
+    
+    else:
+        return parent1, parent2
+    
 ############################################################################################################################################
 #                                                       Mutação                                                                            #
+
+def mutate_upper_triangular_binary(individuos, chance_mutacao):
+    '''
+    Muta uma matrix triangular superior, trocando um elemento 
+    aleatório (fora da diagonal) de 0 para 1, ou vice-versa.
+
+    Args: 
+        individuos: lista contendo as matrizes triangulares superiores
+        chance_mutacao: float que define o limiar da chance de ocorrer mutação no indivíduo
+        
+    return: 
+        retorna uma matriz triangular superior com uma mutação
+    '''
+    size = 0
+    for individuo in individuos:
+        size = individuo.shape[0]
+        if random.random() < chance_mutacao:
+
+            # Escolhe um elemento aleatório (tirando a diagonal)
+            i = np.random.randint(0, size - 1)
+            j = np.random.randint(i + 1, size)  # Assegura que estará acima da diagonal principal
+
+            # Flipa o valor do elemento escolhido
+            individuo[i, j] = 1 - individuo[i, j]
+
 ############################################################################################################################################
 
 
