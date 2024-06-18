@@ -97,3 +97,5 @@ Ao final de tudo, o código rodou da forma que foi de nosso interesse, de forma 
 <br>[11] GeeksForGeeks - Python | random.sample() function : https://www.geeksforgeeks.org/python-random-sample-function/</br>
 
 <br> [12] Fernando dos Santos - Algoritmos Genéticos: Roleta (vídeo extra) : https://www.youtube.com/watch?v=c2uPOs3VawU </br>
+
+<br> [13] numpy.org - Numpy.triu: https://numpy.org/doc/stable/reference/generated/numpy.triu.html </br>
