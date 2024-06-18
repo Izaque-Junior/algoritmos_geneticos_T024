@@ -4,26 +4,26 @@ import numpy as np
 #                                                       Código Inicial                                                                    #
 ############################################################################################################################################
 
-def minimiza_energia(quantidade_atomos):
+def energiaMin(qtdAtomos):
     """
     Cria matrizes a partir da quantidade de possíveis combinações entre o número de átomos que formarão a molécula.
     Args:
-        quantidade_atomos: número inteiro de átomos que compõem a molécula desejada.
-        
+        qtdAtomos: número inteiro de átomos que compõem a molécula desejada.
+         
     return:
         retorna uma lista de matrizes candidatas.
     """
     matrizes = []
     
     # Gerar todas as possíveis matrizes
-    for i in range(2 ** (quantidade_atomos * (quantidade_atomos - 1) // 2)):
-        H = np.zeros((quantidade_atomos, quantidade_atomos))
-        bits = list(format(i, 'b').zfill(quantidade_atomos * (quantidade_atomos - 1) // 2))
+    for i in range(2 ** (qtdAtomos * (qtdAtomos - 1) // 2)):
+        H = np.zeros((qtdAtomos, qtdAtomos))
+        bits = list(format(i, 'b').zfill(qtdAtomos * (qtdAtomos - 1) // 2))
         bit_index = 0
         
         # Preencher a matriz com os valores adequados
-        for j in range(quantidade_atomos):
-            for k in range(j + 1, quantidade_atomos):
+        for j in range(qtdAtomos):
+            for k in range(j + 1, qtdAtomos):
                 if bits[bit_index] == '1':
                     H[j][k] = -1
                     H[k][j] = -1
@@ -33,7 +33,7 @@ def minimiza_energia(quantidade_atomos):
     
     return matrizes
 
-def testar_matrizes(matrizes):
+def testaMatriz(matrizes):
     """
     Calcula a energia total de uma molécula.
     
@@ -80,7 +80,7 @@ def testar_matrizes(matrizes):
 #                                                       From Molecules to Molecules                                                        #
 ############################################################################################################################################
 
-def create_upper_triangular_binary_matrix(size):
+def criaTriu(size):
     '''
     Cria uma matrix triangular superior, com diagonal principal igual a 0.
     
@@ -93,11 +93,11 @@ def create_upper_triangular_binary_matrix(size):
     
     matrix = np.random.randint(2, size=(size, size))
     np.fill_diagonal(matrix, 0)  # Diagonal = 0
-    upper_triangular_matrix = np.triu(matrix)
+    Triu = np.triu(matrix)
     
-    return upper_triangular_matrix
+    return Triu
 
-def initialize_population(pop_size, matrix_size):
+def iniciaPopu(pop_size, matrix_size):
     '''
     Inicializa a população, e já transforma uma matriz triangular
     superior em uma matriz simétrica somando ela com a sua transposta.
@@ -109,34 +109,28 @@ def initialize_population(pop_size, matrix_size):
     return: 
         retorna uma população de matrizes simétricas
     '''
-    population = []
+    populacao = []
     for _ in range(pop_size):
-        upper_triangular = create_upper_triangular_binary_matrix(matrix_size)
-        combined_matrix = upper_triangular + upper_triangular.T
-        population.append((upper_triangular, combined_matrix))
+        upper_triangular = criaTriu(matrix_size)
+        hamiltoniano = upper_triangular + upper_triangular.T
+        populacao.append((upper_triangular, hamiltoniano))
         
-    return population
+    return populacao
 
-def fitness(combined_matrix):
+def fitness(hamiltoniano):
     '''
     Calcula a energia total em uma matriz.
     
     Arg: 
-        combined_matrix: matriz simétrica NxN.
+        hamiltoniano: matriz simétrica NxN.
         
     return: 
         retorna o valor da energia da matriz dada.
     '''
-    eigenvals = np.linalg.eigvals(combined_matrix)
+    eigenvals = np.linalg.eigvals(hamiltoniano)
     autovalores = sorted(eigenvals.real)
     
-    e = combined_matrix.shape[0]
-    
-    if e % 2 == 0:
-        ocupados = e // 2 
-        
-    elif e % 2 == 1:
-        ocupados = (e // 2) + 1
+    e = hamiltoniano.shape[0]
         
     #CÁLCULO DA ENERGIA TOTAL SEGUNDO O MÉTODO DE HUCKEL
     t_total = 0
@@ -154,62 +148,62 @@ def fitness(combined_matrix):
 ############################################################################################################################################
 
 # Tournament selection
-def tournament_selection(population, fitnesses, k=3):
+def selecaoTorneio(populacao, valoresFit, k=3):
     '''
     Seleciona um indivíduo da população utilizando o método de seleção por torneio.
 
     Args: 
-        population: Lista de matrizes simétricas.
-        fitnesses: Lista de valores de fitness correspondentes à população.
+        populacao: Lista de matrizes simétricas.
+        valoresFit: Lista de valores de fitness correspondentes à população.
         k: Número de indivíduos a serem selecionados para o torneio (default = 3).
     
     return: 
         retorna o indivíduo da população com maior valor de fitness entre os selecionados para o torneio.
     '''
     
-    selected_indices = np.random.choice(len(population), k, replace=False)
-    selected = [population[i] for i in selected_indices]
-    selected_fitnesses = [fitnesses[i] for i in selected_indices]
+    indexSelecionados = np.random.choice(len(populacao), k, replace=False)
+    selecionados = [populacao[i] for i in indexSelecionados]
+    valoresFitSelecionados = [valoresFit[i] for i in indexSelecionados]
     
-    return selected[np.argmin(selected_fitnesses)]
+    return selecionados[np.argmin(valoresFitSelecionados)]
 
 ############################################################################################################################################
 #                                                       Cruzamento                                                                         #
 ############################################################################################################################################
 
-def crossover(parent1, parent2, chance_cruzamento):
+def cruzamento(pai1, pai2, chanceCruzamento):
     '''
     Realiza o cruzamento entre dois pais para gerar um filho.
 
     Args:
-        parent1: Tupla contendo a matriz triangular superior e a matriz simétrica correspondente do primeiro pai.
-        parent2: Tupla contendo a matriz triangular superior e a matriz simétrica correspondente do segundo pai.
+        pai1: Tupla contendo a matriz triangular superior e a matriz simétrica correspondente do primeiro pai.
+        pai2: Tupla contendo a matriz triangular superior e a matriz simétrica correspondente do segundo pai.
     
     return: 
         retorna uma tupla contendo a matriz triangular superior e a matriz simétrica correspondente do filho gerado.
     '''
     
-    upper_tri1, _ = parent1
-    upper_tri2, _ = parent2
-    if random.random() < chance_cruzamento:
+    upper_tri1, _ = pai1
+    upper_tri2, _ = pai2
+    if random.random() < chanceCruzamento:
         child1 = []
         child2 = []
         size = upper_tri1.shape[0]
         
-        crossover_point = np.random.randint(1, size)
+        pontoCruzamento = np.random.randint(1, size)
         
         child1 = np.zeros((size, size)) #criando matriz de zeros para o filho 1
         child2 = np.zeros((size, size)) #criando matriz de zeros para o filho 2
         
 
-        # Copy upper part from parent1 and lower part from parent2
+        # Copy upper part from pai1 and lower part from pai2
         for i in range(size):
             for j in range(size):
-                if j >= crossover_point:
+                if j >= pontoCruzamento:
                     child1[i, j] = upper_tri1[i, j]
                     child2[i, j] = upper_tri2[i, j]
                 else:
-                    child1[i, j] = upper_tri2[i, j]
+                    child1[i, j] = upper_tri1[i, j]
                     child2[i, j] = upper_tri2[i, j]
 
         child1_combined = child1 + child1.T
@@ -221,12 +215,12 @@ def crossover(parent1, parent2, chance_cruzamento):
         return filho1, filho2
     
     else:
-        return parent1, parent2
+        return pai1, pai2
     
 ############################################################################################################################################
 #                                                       Mutação                                                                            #
 
-def mutate_upper_triangular_binary(individuos, chance_mutacao):
+def mutaTriu(individuos, chance_mutacao):
     '''
     Muta uma matrix triangular superior, trocando um elemento 
     aleatório (fora da diagonal) de 0 para 1, ou vice-versa.
