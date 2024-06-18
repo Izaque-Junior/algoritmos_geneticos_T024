@@ -15,7 +15,7 @@ Este trabalho tem como objetivo desenvolver um algoritmo genético para otimizar
 
 - `LICENSE`: arquivo que contém o tipo de licença deste repositório.
 
-- `README.md`: arquivo que armazena as informções deste readme.
+- `README.md`: arquivo que armazena as informações deste readme.
 
 ## Bibliotecas necessárias para rodar o notebook:
 
