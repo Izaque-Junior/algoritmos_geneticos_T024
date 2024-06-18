@@ -192,7 +192,7 @@ def cruzamento(pai1, pai2, chanceCruzamento):
         size = upper_tri1.shape[0]
         
         pontoCruzamento = np.random.randint(1, size)
-        
+            
         child1 = np.zeros((size, size)) #criando matriz de zeros para o filho 1
         child2 = np.zeros((size, size)) #criando matriz de zeros para o filho 2
         
